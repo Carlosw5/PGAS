@@ -3,11 +3,28 @@ import board
 import neopixel
 import random
 np = neopixel.NeoPixel(board.D2, 30, auto_write = False, brightness = 0.5)
-
+red = [255, 0, 0]
+blue = [0, 43, 255]
+pink = [255, 0, 255]
+green = [0, 153, 0]
+turq = [0, 255, 255]
+purple = [255, 0, 255]
+orange = [255, 128, 0]
 color = [255,156,127]
-speed = 6
+
 times = 1
-def fadeOut(color, speed=1):
+'''
+
+Function: Fade Out
+
+Description: This function decreases the brightness of the neopixel from its original brightness by lowering RGB value
+
+Parameters: color and speed
+
+Return value: None
+
+'''
+def fadeOut(color, speed=0.001):
     if speed <= 0:
         speed = 1
     fadeR = color[0]/256.0
@@ -26,16 +43,16 @@ def fadeOut(color, speed=1):
         time.sleep(speed)
 '''
 
-Function: Fade Out
+Function: Fade In
 
-Description: This function decreases the brightness of the neopixel from its original brightness by lowering RGB value
+Description: This function increases brighteness of a neopixel by raising RGB value
 
-Parameters: color and speed
+Parameters: color, speed
 
-Return value: None
+Return value: none
 
 '''
-def fadeIn(color, speed=1):
+def fadeIn(color, speed=0.001):
     if speed <= 0:
         speed = 1
     fadeR = color[0]/256.0
@@ -53,31 +70,7 @@ def fadeIn(color, speed=1):
         np.show()
         time.sleep(speed)
         print(color1)
-'''
 
-Function: Fade In
-
-Description: This function increases brighteness of a neopixel by raising RGB value
-
-Parameters: color, speed
-
-Return value: none
-
-'''
-
-def chase(color = [0,0,0], speed = 0.1):
-    for j in range(30):
-        np.show()
-        for i in range(30):
-            if i % 3 != 0:
-                led = (i+j) % 30 
-                np[led] = [0,0,255]
-                print("bColor",i,np[i])
-            elif i % 3 == 0:
-                led = (i+j) % 30
-                np[led] = color
-                print("fColor",i,np[i])
-            time.sleep(speed)
 '''
 
 Function: Chase
@@ -86,7 +79,31 @@ Description: Takes in a background color and a set color moves in intervals of 2
 
 Parameters: color and speed
 
-Return value: none
+Return value: background color
+
+'''
+def chase(color = [0,0,0], speed = 0.01):
+    for j in range(30):
+        np.show()
+        for i in range(30):
+            if i % 3 != 0:
+                led = (i+j) % 30 
+                np[led] = [255,0,255]
+                print("bColor",i,np[i])
+            elif i % 3 == 0:
+                led = (i+j) % 30
+                np[led] = color
+                print("fColor",i,np[i])
+            time.sleep(speed)
+'''
+
+Function: Sparkle
+
+Description: This function takes in a background color and then uses a random integer to pop a random color
+
+Parameters: color and times
+
+Return value: None
 
 '''
 def sparkle(color = [0,0,0], times = 1):
@@ -96,22 +113,21 @@ def sparkle(color = [0,0,0], times = 1):
         led2 = random.randint(0, 28)
         led3 = random.randint(0, 28)
         np[led1] = [12,124,42]
-        np[led2] = [12,124,42]
-        np[led3] = [12,124,42]
+        np[led2] = [255,255,255]
+        np[led3] = [255,255,255]
         np.show()
-        time.sleep(0.01)
-'''
+        time.sleep(0.7)
 
-Function: Sparkle
-
-Description: This function uses a random integer to pop a random color
-
-Parameters: color and times
-
-Return value: None
-
-'''
 while True:
-    sparkle(color, 0.001)
-    fadeIn(color, 0.01)
-    fadeOut(color, 0.01)
+    sparkle(pink, 5)
+    fadeIn(blue)
+    fadeOut(blue)
+    fadeIn(red)
+    fadeOut(red)
+    chase(turq)
+    fadeIn(purple)
+    fadeOut(purple)
+    fadeIn(orange)
+    fadeOut(orange)
+    chase(orange)
+    sparkle(red, 5)
