@@ -131,3 +131,35 @@ while True:
     fadeOut(orange)
     chase(orange)
     sparkle(red, 5)
+
+import time
+import board
+import neopixel
+import random
+np = neopixel.NeoPixel(board.D2, 30, auto_write = False, brightness = 0.5)
+red = [255, 0, 0]
+blue = [0, 43, 255]
+pink = [255, 0, 255]
+green = [0, 153, 0]
+turq = [0, 255, 255]
+purple = [255, 0, 255]
+orange = [255, 128, 0]
+color = [255,156,127]
+black = [0, 0, 0]
+
+times = 1
+
+def sparkle(color = [0,0,0], times = 1):
+    for i in range(times):
+        np.fill(color)
+        for i in range(3):
+            np[random.randint(0, 28)] = [102,0,204]
+            np[random.randint(0, 28)] = [255, 255, 255]
+            np.show()
+            time.sleep(random.random())
+    
+        
+while True:
+    sparkle(black, 8)
+
+    
